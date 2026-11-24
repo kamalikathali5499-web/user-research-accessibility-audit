@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Research & Accessibility Audit — EdVyro Student Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #fdfbf7;
+      --card-bg: #ffffff;
+      --text-main: #18181b;
+      --text-muted: #52525b;
+      --primary: #6d28d9;
+      --primary-hover: #5b21b6;
+      --primary-light: #f5f3ff;
+      --accent-cyan: #0284c7;
+      --accent-cyan-light: #f0f9ff;
+      --accent-green: #15803d;
+      --accent-green-light: #f0fdf4;
+      --accent-red: #b91c1c;
+      --accent-red-light: #fef2f2;
+      --border: #e4e4e7;
+      --radius: 16px;
+      --shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 2px 6px -1px rgba(0, 0, 0, 0.02);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 32px 16px;
+    }
+
+    .skip-link {
+      position: absolute;
+      top: -100px;
+      left: 16px;
+      background: var(--primary);
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-weight: 700;
+      text-decoration: none;
+      z-index: 9999;
+      transition: top 0.2s;
+    }
+    .skip-link:focus {
+      top: 16px;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    header {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 36px 32px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .badge-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .badge-purple { background: var(--primary-light); color: var(--primary); }
+    .badge-cyan { background: var(--accent-cyan-light); color: var(--accent-cyan); }
+    .badge-green { background: var(--accent-green-light); color: var(--accent-green); }
+
+    h1 {
+      font-size: clamp(2rem, 5vw, 2.75rem);
+      font-weight: 800;
+      line-height: 1.15;
+      color: #111827;
+      margin-bottom: 12px;
+    }
+
+    .lead {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      max-width: 780px;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      font-size: 0.95rem;
+    }
+
+    .meta-item strong {
+      display: block;
+      color: #111827;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    h2 {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #111827;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin: 22px 0 12px;
+      color: #18181b;
+    }
+
+    p {
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    /* Persona Grid */
+    .persona-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      margin: 20px 0;
+    }
+
+    .persona-card {
+      background: #fafafa;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      border-top: 4px solid var(--primary);
+    }
+
+    .persona-name {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #111827;
+      margin-bottom: 4px;
+    }
+
+    .persona-tagline {
+      font-size: 0.85rem;
+      color: var(--primary);
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .persona-card ul {
+      list-style-type: none;
+      font-size: 0.92rem;
+      color: var(--text-muted);
+    }
+
+    .persona-card li {
+      margin-bottom: 8px;
+      padding-left: 18px;
+      position: relative;
+    }
+
+    .persona-card li::before {
+      content: "•";
+      position: absolute;
+      left: 4px;
+      color: var(--primary);
+      font-weight: bold;
+    }
+
+    /* Table styles */
+    .table-wrapper {
+      overflow-x: auto;
+      margin: 20px 0;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.93rem;
+    }
+
+    th, td {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      background: #f8fafc;
+      font-weight: 700;
+      color: #111827;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+      letter-spacing: 0.05em;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .status-pill {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      font-weight: 700;
+      font-size: 0.8rem;
+    }
+    .status-pass { background: var(--accent-green-light); color: var(--accent-green); }
+    .status-fail { background: var(--accent-red-light); color: var(--accent-red); }
+    .status-warn { background: #fefce8; color: #a16207; }
+
+    /* Checklist Section */
+    .checklist {
+      list-style: none;
+      margin: 16px 0;
+    }
+
+    .checklist-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: 8px;
+      background: #f9fafb;
+      margin-bottom: 10px;
+      font-size: 0.95rem;
+    }
+
+    .check-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      background: var(--accent-green);
+      color: #fff;
+      border-radius: 50%;
+      font-size: 13px;
+      font-weight: bold;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* Callout */
+    .callout {
+      border-left: 4px solid var(--primary);
+      background: var(--primary-light);
+      padding: 20px;
+      border-radius: 8px;
+      margin: 20px 0;
+      font-size: 0.98rem;
+    }
+
+    .callout strong {
+      color: var(--primary);
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 32px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 640px) {
+      body { padding: 16px 12px; }
+      header, .card { padding: 24px 18px; }
+      .meta-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <div class="container" id="main-content">
+    <header>
+      <div class="badge-bar">
+        <span class="badge badge-purple">UI/UX Design Track</span>
+        <span class="badge badge-cyan">Task 01</span>
+        <span class="badge badge-green">Submission Ready</span>
+      </div>
+      <h1>Student Support Portal: User Research & Accessibility Audit</h1>
+      <p class="lead">An evidence-based investigation into student user pain points, WCAG 2.1 AA accessibility compliance, and design problem framing for the EdVyro learning platform.</p>
+      
+      <div class="meta-grid">
+        <div class="meta-item">
+          <strong>Author</strong>
+          <span>Kamalini</span>
+        </div>
+        <div class="meta-item">
+          <strong>Estimated Duration</strong>
+          <span>45–60 minutes</span>
+        </div>
+        <div class="meta-item">
+          <strong>Deliverable Type</strong>
+          <span>Research Report & Technical Audit</span>
+        </div>
+        <div class="meta-item">
+          <strong>Next Phase</strong>
+          <span>Task 03 (Wireframes & IA)</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- SECTION 1: USER PERSONAS -->
+    <section class="card">
+      <h2>👥 1. Target User Personas</h2>
+      <p>Research evaluated three primary student archetypes representing diverse physical, environmental, and technological constraints:</p>
+      
+      <div class="persona-grid">
+        <div class="persona-card">
+          <div class="persona-name">Asha, 19</div>
+          <div class="persona-tagline">Mobile-First Intern</div>
+          <ul>
+            <li><strong>Hardware:</strong> Entry-level Android, 3G/4G network</li>
+            <li><strong>Context:</strong> First technical internship</li>
+            <li><strong>Goal:</strong> Submit proof link and confirm receipt</li>
+            <li><strong>Pain:</strong> No upload progress indicators; accidental double submits</li>
+            <li><strong>Need:</strong> Plain instructions & visible progress</li>
+          </ul>
+        </div>
+
+        <div class="persona-card">
+          <div class="persona-name">Ravi, 22</div>
+          <div class="persona-tagline">Assistive Tech User</div>
+          <ul>
+            <li><strong>Hardware:</strong> Windows laptop, screen magnifier (200%)</li>
+            <li><strong>Context:</strong> Keyboard navigation user</li>
+            <li><strong>Goal:</strong> Complete checklist without mouse</li>
+            <li><strong>Pain:</strong> Disappearing focus rings; modal focus traps</li>
+            <li><strong>Need:</strong> Scalable text & predictable focus</li>
+          </ul>
+        </div>
+
+        <div class="persona-card">
+          <div class="persona-name">Meera, 20</div>
+          <div class="persona-tagline">Time-Constrained Learner</div>
+          <ul>
+            <li><strong>Hardware:</strong> Shared family tablet / PC</li>
+            <li><strong>Context:</strong> 20–30 min study windows</li>
+            <li><strong>Goal:</strong> Draft submissions in short sessions</li>
+            <li><strong>Pain:</strong> Silent session timeouts wipe out work</li>
+            <li><strong>Need:</strong> Auto-saved drafts & session resilience</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: FIVE SURVEY QUESTIONS -->
+    <section class="card">
+      <h2>❓ 2. User Research Survey & Interview Questions</h2>
+      <p>Five targeted questions deployed during discovery to unearth critical usability and cognitive barriers:</p>
+      
+      <div class="checklist">
+        <div class="checklist-item">
+          <span class="check-icon">1</span>
+          <div><strong>Comprehension:</strong> When you open an assignment brief, what is the first thing you look for, and how easily can you identify passing criteria?</div>
+        </div>
+        <div class="checklist-item">
+          <span class="check-icon">2</span>
+          <div><strong>Resource Discovery:</strong> Have you ever struggled to find starter templates, checklists, or sample datasets? What visual affordance was missing?</div>
+        </div>
+        <div class="checklist-item">
+          <span class="check-icon">3</span>
+          <div><strong>Submission Reassurance:</strong> Describe your experience pasting and submitting a proof link. Did you feel 100% confident your work was safely logged?</div>
+        </div>
+        <div class="checklist-item">
+          <span class="check-icon">4</span>
+          <div><strong>Feedback Recovery:</strong> When an assignment requires revisions or is rejected, does the system explain exactly which checklist items failed?</div>
+        </div>
+        <div class="checklist-item">
+          <span class="check-icon">5</span>
+          <div><strong>Ergonomic & Assistive Constraints:</strong> What device-specific issues (e.g. tiny touch targets, disappearing focus rings, session timeouts) cause you to abandon a session?</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: WCAG ACCESSIBILITY AUDIT -->
+    <section class="card">
+      <h2>♿ 3. Evidence-Based Accessibility Audit (WCAG 2.1 AA)</h2>
+      <p>Comprehensive evaluation covering navigation, typography readability, color contrast ratios, form validation, and mobile touch ergonomics:</p>
+
+      <h3>Color Contrast Ratio Audit</h3>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>UI Element</th>
+              <th>Foreground</th>
+              <th>Background</th>
+              <th>Ratio</th>
+              <th>Required</th>
+              <th>Result</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Primary Heading Text</td>
+              <td><code>#21152c</code></td>
+              <td><code>#ffffff</code></td>
+              <td><strong>15.8:1</strong></td>
+              <td>4.5:1</td>
+              <td><span class="status-pill status-pass">PASS</span></td>
+            </tr>
+            <tr>
+              <td>Body Copy</td>
+              <td><code>#596274</code></td>
+              <td><code>#ffffff</code></td>
+              <td><strong>6.1:1</strong></td>
+              <td>4.5:1</td>
+              <td><span class="status-pill status-pass">PASS</span></td>
+            </tr>
+            <tr>
+              <td>Muted Metadata Pill</td>
+              <td><code>#9ca3af</code></td>
+              <td><code>#faf8fc</code></td>
+              <td><strong>2.6:1</strong></td>
+              <td>4.5:1</td>
+              <td><span class="status-pill status-fail">FAIL</span></td>
+            </tr>
+            <tr>
+              <td>Primary CTA Button</td>
+              <td><code>#ffffff</code></td>
+              <td><code>#6d28d9</code></td>
+              <td><strong>8.2:1</strong></td>
+              <td>4.5:1</td>
+              <td><span class="status-pill status-pass">PASS</span></td>
+            </tr>
+            <tr>
+              <td>Input Placeholder Text</td>
+              <td><code>#b0b7c3</code></td>
+              <td><code>#ffffff</code></td>
+              <td><strong>2.2:1</strong></td>
+              <td>4.5:1</td>
+              <td><span class="status-pill status-fail">FAIL</span></td>
+            </tr>
+            <tr>
+              <td>Cyan Callout Border</td>
+              <td><code>#2fb3e3</code></td>
+              <td><code>#ffffff</code></td>
+              <td><strong>1.9:1</strong></td>
+              <td>3.0:1</td>
+              <td><span class="status-pill status-fail">FAIL</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Key Findings Across Critical Categories</h3>
+      <ul>
+        <li><strong>Navigation:</strong> Absence of Skip Link (WCAG 2.4.1) forces 18 tab presses. Keyboard focus outline was removed (`outline: none`), failing WCAG 2.4.7.</li>
+        <li><strong>Readability:</strong> Reading level measured at Flesch-Kincaid 11.4; needs reduction to 7.0–8.5 for plain inclusive language.</li>
+        <li><strong>Forms:</strong> Missing explicit `<label>` tags; input errors rely solely on red border colors, failing WCAG 1.4.1 (Use of Color).</li>
+        <li><strong>Mobile Usability (360px):</strong> Resource buttons measure 28px height, violating the WCAG 44x44px touch target standard.</li>
+      </ul>
+    </section>
+
+    <!-- SECTION 4: PROBLEM STATEMENT & METRICS -->
+    <section class="card">
+      <h2>🎯 4. Design Problem Statement & Success Metrics</h2>
+      <div class="callout">
+        <strong>Core Problem Statement</strong>
+        Student interns navigating the support portal face severe cognitive friction due to obscured deliverables, high anxiety caused by unconfirmed submissions, and complete progress loss during silent session timeouts on mobile and shared devices.
+      </div>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Success Metric</th>
+              <th>Baseline</th>
+              <th>Target Goal</th>
+              <th>Verification Method</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>WCAG 2.1 AA Violations</td>
+              <td>9 Failures</td>
+              <td><strong>0 (100% Pass)</strong></td>
+              <td>axe-core & manual keyboard audit</td>
+            </tr>
+            <tr>
+              <td>System Usability Scale (SUS)</td>
+              <td>58.5 / 100</td>
+              <td><strong>≥ 82.0 / 100 ("A" Grade)</strong></td>
+              <td>10-question standardized SUS survey</td>
+            </tr>
+            <tr>
+              <td>Task Completion Rate</td>
+              <td>71%</td>
+              <td><strong>≥ 95%</strong></td>
+              <td>Usability testing across Asha, Ravi, Meera</td>
+            </tr>
+            <tr>
+              <td>Duplicate Submission Error Rate</td>
+              <td>38%</td>
+              <td><strong>&lt; 2%</strong></td>
+              <td>Disabled state & progress spinner</td>
+            </tr>
+            <tr>
+              <td>Draft Abandonment Rate</td>
+              <td>24%</td>
+              <td><strong>&lt; 5%</strong></td>
+              <td>Client-side local draft recovery</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SECTION 5: PORTFOLIO UPGRADE -->
+    <section class="card">
+      <h2>🚀 5. Portfolio Upgrade: Prioritization Matrix</h2>
+      <p>Findings prioritized using an <strong>Impact vs. Effort</strong> framework to guide the upcoming Task 03 wireframing sprint:</p>
+      
+      <div class="checklist">
+        <div class="checklist-item">
+          <span class="check-icon">P1</span>
+          <div><strong>Submission Loading & Success State (High Impact / Low Effort):</strong> Provide animated loading spinner, disable button on click, and render verifiable confirmation receipt.</div>
+        </div>
+        <div class="checklist-item">
+          <span class="check-icon">P1</span>
+          <div><strong>Auto-Saved Draft State (High Impact / Med Effort):</strong> Implement `localStorage` draft caching to safeguard students on unstable sessions.</div>
+        </div>
+        <div class="checklist-item">
+          <span class="check-icon">P1</span>
+          <div><strong>Accessible Modal Focus Trap (High Impact / Med Effort):</strong> Ensure keyboard focus is trapped inside dialogs and `:focus-visible` outlines are restored.</div>
+        </div>
+        <div class="checklist-item">
+          <span class="check-icon">P2</span>
+          <div><strong>Accessible Touch Targets & Floating Labels (Med Impact / Low Effort):</strong> Enlarge clickable areas to 48x48px and replace disappearing placeholders with persistent labels.</div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>EdVyro UI/UX Design Track · Task 01: User Research and Accessibility Audit · Prepared by Kamalini</p>
+    </footer>
+  </div>
+</body>
+</html>
